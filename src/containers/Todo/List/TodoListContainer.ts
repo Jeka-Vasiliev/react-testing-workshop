@@ -1,8 +1,7 @@
-import { bindActionCreators } from 'redux';
-import Dispatch  from '../../../store/dispatch';
 import { connect } from 'react-redux';
-import { deleteTodo, toggleTodo, updateFilter } from '../../../store/actionCreators';
+
 import TodoList from '../../../components/Todo/List/TodoList';
+import { deleteTodo, toggleTodo, updateFilter } from '../../../store/actionCreators';
 import AppState from '../../../store/AppState';
 
 const mapStateToProps = (state: AppState) => ({
@@ -11,10 +10,10 @@ const mapStateToProps = (state: AppState) => ({
   filter: state.filter
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  deleteTodo: bindActionCreators(deleteTodo, dispatch),
-  toggleTodo: bindActionCreators(toggleTodo, dispatch),
-  updateFilter: bindActionCreators(updateFilter, dispatch)
-});
+const mapDispatchToProps = {
+  deleteTodo,
+  toggleTodo,
+  updateFilter
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
