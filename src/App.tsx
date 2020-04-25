@@ -4,11 +4,11 @@ import { Col, Row } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import AddTodo from './containers/Todo/Add/AddTodoContainer';
-import TodoList from './containers/Todo/List/TodoListContainer';
+import { AddTodo } from './components/Todo/Add/AddTodo';
+import { TodoList } from './components/Todo/List/TodoList';
 import { loadTodos } from './store/actionCreators';
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,5 +37,3 @@ const App: React.FC = () => {
     </div>
   );
 };
-
-export default App;

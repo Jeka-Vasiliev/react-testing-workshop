@@ -1,14 +1,15 @@
-import React from 'react';
 import { Input } from 'antd';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 
-interface AddTodoProps {
-  addTodo: (title: string) => void;
-}
+import { addTodo } from '../../../store/actionCreators';
 
-export default ({ addTodo }: AddTodoProps) => {
+export const AddTodo: React.FC = () => {
+  const dispatch = useDispatch();
+
   const keyHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && addTodo) {
-      addTodo(e.currentTarget.value);
+    if (e.key === 'Enter') {
+      dispatch(addTodo(e.currentTarget.value));
       e.currentTarget.value = '';
     }
   };

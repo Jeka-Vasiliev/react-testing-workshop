@@ -1,42 +1,47 @@
-import React from 'react';
-import Todo from '../../../types/Todo';
 import Button from 'antd/lib/button';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-interface FooterProps {
-  todos: Todo[];
-  currentFilter: string;
-  updateFilter: (filter: string) => void;
-}
+import { updateFilter } from '../../../store/actionCreators';
+import AppState from '../../../store/AppState';
 
-export default ({ todos, currentFilter, updateFilter }: FooterProps) => {
-  const outstanding = todos.filter(todo => !todo.completed).length;
-  const getButtonType = (type: string) => currentFilter === type ? 'primary' : undefined;
+export const Footer: React.FC = () => {
+  const todos = useSelector((state: AppState) => state.todos);
+  const currentFilter = useSelector((state: AppState) => state.filter);
+
+  const dispatch = useDispatch();
+
+  const outstanding = todos.filter((todo) => !todo.completed).length;
+  const getButtonType = (type: string) =>
+    currentFilter === type ? 'primary' : undefined;
 
   return (
     <div>
-      <div style={{width: '60%', display: 'inline-block'}}>
+      <div style={{ width: '60%', display: 'inline-block' }}>
         {outstanding} items outstanding
       </div>
-      <div style={{width: '40%', display: 'inline-block', textAlign: 'right'}}>
+      <div
+        style={{ width: '40%', display: 'inline-block', textAlign: 'right' }}
+      >
         <Button
           type={getButtonType('ALL')}
-          style={{marginRight: '10px'}}
-          onClick={() => updateFilter('ALL')}
+          style={{ marginRight: '10px' }}
+          onClick={() => dispatch(updateFilter('ALL'))}
         >
           All
         </Button>
-        
+
         <Button
           type={getButtonType('ACTIVE')}
-          style={{marginRight: '10px'}}
-          onClick={() => updateFilter('ACTIVE')}
+          style={{ marginRight: '10px' }}
+          onClick={() => dispatch(updateFilter('ACTIVE'))}
         >
           Active
         </Button>
 
         <Button
           type={getButtonType('COMPLETED')}
-          onClick={() => updateFilter('COMPLETED')}
+          onClick={() => dispatch(updateFilter('COMPLETED'))}
         >
           Completed
         </Button>
