@@ -3,11 +3,11 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { updateFilter } from '../../../store/actionCreators';
-import AppState from '../../../store/AppState';
+import { getFilter, getTodos } from '../../../store/selector';
 
 export const Footer: React.FC = () => {
-  const todos = useSelector((state: AppState) => state.todos);
-  const currentFilter = useSelector((state: AppState) => state.filter);
+  const todos = useSelector(getTodos);
+  const currentFilter = useSelector(getFilter);
 
   const dispatch = useDispatch();
 

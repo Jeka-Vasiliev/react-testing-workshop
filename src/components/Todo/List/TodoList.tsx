@@ -3,27 +3,15 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { deleteTodo, toggleTodo } from '../../../store/actionCreators';
-import AppState from '../../../store/AppState';
+import { getFilteredTodos, getTodosLoading } from '../../../store/selector';
 import Todo from '../../../types/Todo';
 import { Footer } from './Footer';
 
 export const TodoList: React.FC = () => {
-  const filter = useSelector((state: AppState) => state.filter);
-  const todos = useSelector((state: AppState) => state.todos);
-  const loading = useSelector((state: AppState) => state.todosLoading);
+  const loading = useSelector(getTodosLoading);
+  const filteredTodos = useSelector(getFilteredTodos);
 
   const dispatch = useDispatch();
-
-  const getTodos = () => {
-    switch (filter) {
-      case 'ACTIVE':
-        return todos.filter((todo) => !todo.completed);
-      case 'COMPLETED':
-        return todos.filter((todo) => todo.completed);
-      default:
-        return todos;
-    }
-  };
 
   const columns = [
     {
@@ -67,7 +55,7 @@ export const TodoList: React.FC = () => {
     <Table
       rowKey={(record: Todo) => record.id.toString()}
       columns={columns}
-      dataSource={getTodos()}
+      dataSource={filteredTodos}
       bordered={true}
       pagination={false}
       loading={loading}
