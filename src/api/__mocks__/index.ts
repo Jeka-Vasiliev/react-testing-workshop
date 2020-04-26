@@ -14,10 +14,10 @@ export default {
     };
     id++;
     db = [...db, newTodo];
-    return newTodo;
+    return { data: newTodo };
   },
   async fetch() {
-    return db;
+    return { data: db };
   },
   async delete(todo: Todo) {
     db = db.filter((t) => t.id !== todo.id);
@@ -28,5 +28,7 @@ export default {
         next.id === todo.id ? { ...next, todo } : next;
       return [...acc, possiblyUpdatedNext];
     }, [] as Todo[]);
+
+    return { data: db.find((t) => t.id === todo.id) };
   },
 };

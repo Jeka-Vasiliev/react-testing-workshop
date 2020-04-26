@@ -1,29 +1,14 @@
-import { createAppStore } from ".";
-import { addTodo } from "./actions";
-import { getTodos } from "./selectors";
+import { createAppStore } from '.'
+import { addTodo } from './actions'
+
+jest.mock("../api");
 
 describe("addTodo", () => {
   it("should add todo", async () => {
     const store = createAppStore();
-    const newTodo = {
-      id: 1,
-      order: 1,
-      title: "foo",
-      url: "bar",
-      completed: false,
-    };
 
-    store.dispatch(addTodo.success(newTodo));
+    store.dispatch(addTodo.request("foo"));
 
-    const todos = getTodos(store.getState());
-    expect(todos).toEqual([
-      {
-        id: 1,
-        order: 1,
-        title: "foo",
-        url: "bar",
-        completed: false,
-      },
-    ]);
+    await expect(store).toContainTodoWithName("foo");
   });
 });
