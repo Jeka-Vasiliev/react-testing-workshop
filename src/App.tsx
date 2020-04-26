@@ -1,19 +1,19 @@
-import './App.css';
+import "./App.css";
 
-import { Col, Row } from 'antd';
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { Col, Row } from "antd";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-import { AddTodo } from './components/Todo/Add/AddTodo';
-import { TodoList } from './components/Todo/List/TodoList';
-import { loadTodos } from './store/actions';
+import { AddTodo } from "./components/Todo/Add/AddTodo";
+import { TodoList } from "./components/Todo/List/TodoList";
+import { loadTodos } from "./store/actions";
 
 export const App: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loadTodos.request());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>

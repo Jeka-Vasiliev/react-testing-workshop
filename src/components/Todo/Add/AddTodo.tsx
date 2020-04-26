@@ -1,16 +1,16 @@
-import { Input } from 'antd';
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import { Input } from "antd";
+import React from "react";
+import { useDispatch } from "react-redux";
 
-import { addTodo } from '../../../store/actions';
+import { addTodo } from "../../../store/actions";
 
 export const AddTodo: React.FC = () => {
   const dispatch = useDispatch();
 
   const keyHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       dispatch(addTodo.request(e.currentTarget.value));
-      e.currentTarget.value = '';
+      e.currentTarget.value = "";
     }
   };
 

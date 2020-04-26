@@ -1,7 +1,7 @@
-import axios from 'axios';
-import Todo from '../types/Todo';
+import axios from "axios";
+import Todo from "../types/Todo";
 
-const baseUrl = 'https://todobackend.apphb.com/todo-backend';
+const baseUrl = "https://todobackend.apphb.com/todo-backend";
 
 export default {
   async add(title: string) {
