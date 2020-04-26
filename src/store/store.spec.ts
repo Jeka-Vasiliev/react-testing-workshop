@@ -1,17 +1,29 @@
-import { waitFor } from "@testing-library/react";
-
-import store from ".";
+import { createAppStore } from ".";
 import { addTodo } from "./actions";
 import { getTodos } from "./selectors";
 
-jest.mock("../api/index.ts");
-
 describe("addTodo", () => {
   it("should add todo", async () => {
-    store.dispatch(addTodo.request("hi"));
+    const store = createAppStore();
+    const newTodo = {
+      id: 1,
+      order: 1,
+      title: "foo",
+      url: "bar",
+      completed: false,
+    };
 
-    await waitFor(() => {
-      expect(getTodos(store.getState()).length).toBe(1);
-    });
+    store.dispatch(addTodo.success(newTodo));
+
+    const todos = getTodos(store.getState());
+    expect(todos).toEqual([
+      {
+        id: 1,
+        order: 1,
+        title: "foo",
+        url: "bar",
+        completed: false,
+      },
+    ]);
   });
 });
