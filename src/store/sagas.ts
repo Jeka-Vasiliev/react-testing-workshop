@@ -4,10 +4,10 @@ import api from "../api";
 import { addTodo, deleteTodo, loadTodos, toggleTodo } from "./actions";
 
 function* listenLoadTodos() {
-  yield takeLatest(loadTodos.request, function*() {
+  yield takeLatest(loadTodos.request, function* () {
     try {
-      const response = yield call(api.fetch);
-      yield put(loadTodos.success(response.data));
+      const todos = yield call(api.fetch);
+      yield put(loadTodos.success(todos));
     } catch (error) {
       yield put(loadTodos.failure(error));
     }
@@ -15,10 +15,10 @@ function* listenLoadTodos() {
 }
 
 function* listenAddTodo() {
-  yield takeEvery(addTodo.request, function*({ payload: title }) {
+  yield takeEvery(addTodo.request, function* ({ payload: title }) {
     try {
-      const response = yield call(api.add, title);
-      yield put(addTodo.success(response.data));
+      const newTodo = yield call(api.add, title);
+      yield put(addTodo.success(newTodo));
     } catch (error) {
       yield put(addTodo.failure(error));
     }
@@ -26,13 +26,13 @@ function* listenAddTodo() {
 }
 
 function* listenToggleTodo() {
-  yield takeEvery(toggleTodo.request, function*({ payload: todo }) {
+  yield takeEvery(toggleTodo.request, function* ({ payload: todo }) {
     try {
-      const response = yield call(api.update, {
+      const updatedTodo = yield call(api.update, {
         ...todo,
-        completed: !todo.completed
+        completed: !todo.completed,
       });
-      yield put(toggleTodo.success(response.data));
+      yield put(toggleTodo.success(updatedTodo));
     } catch (error) {
       yield put(toggleTodo.failure(error));
     }
@@ -40,7 +40,7 @@ function* listenToggleTodo() {
 }
 
 function* listenDeleteTodo() {
-  yield takeEvery(deleteTodo.request, function*({ payload: todo }) {
+  yield takeEvery(deleteTodo.request, function* ({ payload: todo }) {
     try {
       yield call(api.delete, todo);
       yield put(deleteTodo.success(todo));
