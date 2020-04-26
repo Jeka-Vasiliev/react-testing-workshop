@@ -1,49 +1,13 @@
-import { ActionType } from 'typesafe-actions';
+import { combineReducers } from 'redux';
 
-import * as actions from '../actionCreators';
-import AppState from '../AppState';
-import initialState from '../initialState';
+import { filterReducer } from './filterReducer';
+import { loadingReducer } from './loadingReducer';
+import { todosReducer } from './todosReducer';
 
-type TodoAction = ActionType<typeof actions>;
+export const rootReducer = combineReducers({
+  filter: filterReducer,
+  todosLoading: loadingReducer,
+  todos: todosReducer,
+});
 
-export default (
-  state: AppState = initialState,
-  action: TodoAction
-): AppState => {
-  switch (action.type) {
-    case 'ADD_TODO_SUCCESS':
-      return {
-        ...state,
-        todos: [...state.todos, action.payload],
-      };
-
-    case 'DELETE_TODO_SUCCESS':
-      return {
-        ...state,
-        todos: state.todos.filter((t) => action.payload.id !== t.id),
-      };
-
-    case 'TOGGLE_TODO_SUCCESS':
-      const todo = action.payload;
-
-      return {
-        ...state,
-        todos: state.todos.map((t) => (todo.id === t.id ? todo : t)),
-      };
-
-    case 'UPDATE_FILTER':
-      return {
-        ...state,
-        filter: action.payload,
-      };
-
-    case 'LOAD_TODOS_SUCCESS':
-      return {
-        ...state,
-        todos: action.payload,
-      };
-
-    default:
-      return state;
-  }
-};
+export type AppState = ReturnType<typeof rootReducer>;

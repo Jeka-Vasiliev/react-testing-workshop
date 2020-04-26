@@ -2,7 +2,7 @@ import { Input } from 'antd';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { addTodo } from '../../../store/actionCreators';
+import { addTodo } from '../../../store/actions';
 
 export const AddTodo: React.FC = () => {
   const dispatch = useDispatch();

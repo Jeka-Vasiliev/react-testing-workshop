@@ -1,7 +1,7 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 
 import api from '../api';
-import { addTodo, deleteTodo, loadTodos, toggleTodo } from './actionCreators';
+import { addTodo, deleteTodo, loadTodos, toggleTodo } from './actions';
 
 function* listenLoadTodos() {
   yield takeLatest(loadTodos.request, function* () {

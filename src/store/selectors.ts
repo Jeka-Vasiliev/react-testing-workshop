@@ -1,4 +1,4 @@
-import AppState from './AppState';
+import { AppState } from './reducers';
 
 export const getFilter = (state: AppState) => state.filter;
 export const getTodos = (state: AppState) => state.todos;

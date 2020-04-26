@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import { AddTodo } from './components/Todo/Add/AddTodo';
 import { TodoList } from './components/Todo/List/TodoList';
-import { loadTodos } from './store/actionCreators';
+import { loadTodos } from './store/actions';
 
 export const App: React.FC = () => {
   const dispatch = useDispatch();

@@ -2,8 +2,8 @@ import { Button, Table } from 'antd';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { deleteTodo, toggleTodo } from '../../../store/actionCreators';
-import { getFilteredTodos, getTodosLoading } from '../../../store/selector';
+import { deleteTodo, toggleTodo } from '../../../store/actions';
+import { getFilteredTodos, getTodosLoading } from '../../../store/selectors';
 import Todo from '../../../types/Todo';
 import { Footer } from './Footer';
 

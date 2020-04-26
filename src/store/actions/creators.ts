@@ -1,6 +1,6 @@
 import { createAction, createAsyncAction } from 'typesafe-actions';
 
-import Todo from '../types/Todo';
+import Todo from '../../types/Todo';
 
 export const addTodo = createAsyncAction(
   'ADD_TODO_REQUEST',

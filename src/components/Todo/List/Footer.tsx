@@ -2,8 +2,8 @@ import Button from 'antd/lib/button';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { updateFilter } from '../../../store/actionCreators';
-import { getFilter, getTodos } from '../../../store/selector';
+import { updateFilter } from '../../../store/actions';
+import { getFilter, getTodos } from '../../../store/selectors';
 
 export const Footer: React.FC = () => {
   const todos = useSelector(getTodos);
