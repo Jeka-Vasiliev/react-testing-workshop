@@ -1,26 +1,26 @@
 import { Input } from "antd";
 import React from "react";
-import { useDispatch } from "react-redux";
 
-import { addTodo } from "../../../store/actions";
+import { useCreatingNewTodo } from "./useCreatingNewTodo";
 
 export const AddTodo: React.FC = () => {
-  const dispatch = useDispatch();
-
-  const keyHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      dispatch(addTodo.request(e.currentTarget.value));
-      e.currentTarget.value = "";
-    }
-  };
+  const { todoTitle, setTodoTitle, createTodo } = useCreatingNewTodo();
 
   return (
-    <Input
-      autoFocus={true}
-      type="text"
-      className="form-control"
-      placeholder="What needs to be done?"
-      onKeyUp={keyHandler}
-    />
+    <form
+      onSubmit={(event) => {
+        createTodo();
+        event.preventDefault();
+      }}
+    >
+      <Input
+        autoFocus={true}
+        type="text"
+        className="form-control"
+        placeholder="What needs to be done?"
+        value={todoTitle}
+        onChange={(event) => setTodoTitle(event.currentTarget.value)}
+      />
+    </form>
   );
 };
