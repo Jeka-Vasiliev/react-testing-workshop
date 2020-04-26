@@ -1,55 +1,46 @@
-import {
-  TodoAction,  
-  ToggleTodoAction,
-  UpdateFilterAction,  
-  TodosLoadingAction,
-  LoadTodosSuccessAction,
-  AddTodoSuccessAction,
-  DeleteTodoSuccessAction
-} from '../actions';
+import { ActionType } from 'typesafe-actions';
 
+import * as actions from '../actionCreators';
 import AppState from '../AppState';
 import initialState from '../initialState';
-import ActionTypes from '../ActionTypes';
 
-export default (state: AppState = initialState, action: TodoAction): AppState => {
+type TodoAction = ActionType<typeof actions>;
+
+export default (
+  state: AppState = initialState,
+  action: TodoAction
+): AppState => {
   switch (action.type) {
-    case ActionTypes.ADD_TODO_SUCCESS:
+    case 'ADD_TODO_SUCCESS':
       return {
         ...state,
-        todos: [ ...state.todos, (action as AddTodoSuccessAction).todo]
+        todos: [...state.todos, action.payload],
       };
 
-    case ActionTypes.DELETE_TODO_SUCCESS:
+    case 'DELETE_TODO_SUCCESS':
       return {
         ...state,
-        todos: state.todos.filter(t => (action as DeleteTodoSuccessAction).todo.id !== t.id)
+        todos: state.todos.filter((t) => action.payload.id !== t.id),
       };
 
-    case ActionTypes.UPDATE_TODOS_LOADING:
+    case 'TOGGLE_TODO_SUCCESS':
+      const todo = action.payload;
+
       return {
         ...state,
-        todosLoading: (action as TodosLoadingAction).loading
+        todos: state.todos.map((t) => (todo.id === t.id ? todo : t)),
       };
 
-    case ActionTypes.TOGGLE_TODO_SUCCESS:
-      const todo = (action as ToggleTodoAction).todo;
-
+    case 'UPDATE_FILTER':
       return {
         ...state,
-        todos: state.todos.map(t => todo.id === t.id ? todo : t)
+        filter: action.payload,
       };
 
-    case ActionTypes.UPDATE_FILTER:
+    case 'LOAD_TODOS_SUCCESS':
       return {
         ...state,
-        filter: (action as UpdateFilterAction).filter
-      };
-
-    case ActionTypes.LOAD_TODOS_SUCCESS:
-      return {
-        ...state,
-        todos: (action as LoadTodosSuccessAction).todos
+        todos: action.payload,
       };
 
     default:

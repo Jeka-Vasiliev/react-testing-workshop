@@ -1,50 +1,42 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 
-import ActionTypes from './ActionTypes';
 import api from '../api';
+import { addTodo, deleteTodo, loadTodos, toggleTodo } from './actionCreators';
 
-import { 
-  AddTodoAction, 
-  ToggleTodoAction,
-  DeleteTodoAction
-} from './actions';
-
-import {
-  updateLoading, 
-  loadTodosSuccess, 
-  addTodoSuccess,
-  toggleTodoSuccess,
-  deleteTodoSuccess, 
-} from './actionCreators';
-
-export function* fetchTodos() {   
-  yield put(updateLoading(true));
-  const response = yield call(api.fetch);
-  yield put(loadTodosSuccess(response.data));   
-  yield put(updateLoading(false));
-}
-
-export function* addTodo(action: AddTodoAction) {       
-  const response = yield call(api.add, action.title);
-  yield put(addTodoSuccess(response.data));     
-}
-
-export function* toggleTodo({ todo }: ToggleTodoAction) {       
-  const response = yield call(api.update, {
-    ...todo,
-    completed: !todo.completed
+function* listenLoadTodos() {
+  yield takeLatest(loadTodos.request, function* () {
+    const response = yield call(api.fetch);
+    yield put(loadTodos.success(response.data));
   });
-  yield put(toggleTodoSuccess(response.data));     
 }
 
-export function* deleteTodo({ todo }: DeleteTodoAction) {       
-  yield call(api.delete, todo);
-  yield put(deleteTodoSuccess(todo));     
+function* listenAddTodo() {
+  yield takeEvery(addTodo.request, function* ({ payload: title }) {
+    const response = yield call(api.add, title);
+    yield put(addTodo.success(response.data));
+  });
+}
+
+function* listenToggleTodo() {
+  yield takeEvery(toggleTodo.request, function* ({ payload: todo }) {
+    const response = yield call(api.update, {
+      ...todo,
+      completed: !todo.completed,
+    });
+    yield put(toggleTodo.success(response.data));
+  });
+}
+
+function* listenDeleteTodo() {
+  yield takeEvery(deleteTodo.request, function* ({ payload: todo }) {
+    yield call(api.delete, todo);
+    yield put(deleteTodo.success(todo));
+  });
 }
 
 export default function* rootSaga() {
-  yield takeLatest(ActionTypes.LOAD_TODOS, fetchTodos);
-  yield takeEvery(ActionTypes.ADD_TODO, addTodo);
-  yield takeEvery(ActionTypes.TOGGLE_TODO, toggleTodo);
-  yield takeEvery(ActionTypes.DELETE_TODO, deleteTodo);
+  yield* listenLoadTodos();
+  yield* listenAddTodo();
+  yield* listenToggleTodo();
+  yield* listenDeleteTodo();
 }

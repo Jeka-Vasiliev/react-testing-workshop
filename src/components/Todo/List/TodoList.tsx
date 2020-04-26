@@ -21,7 +21,7 @@ export const TodoList: React.FC = () => {
         <input
           type="checkbox"
           defaultChecked={record.completed}
-          onClick={() => dispatch(toggleTodo(record))}
+          onClick={() => dispatch(toggleTodo.request(record))}
         />
       ),
     },
@@ -43,7 +43,7 @@ export const TodoList: React.FC = () => {
       render: (text: string, record: Todo) => (
         <span
           style={{ width: '100%', textAlign: 'right' }}
-          onClick={() => dispatch(deleteTodo(record))}
+          onClick={() => dispatch(deleteTodo.request(record))}
         >
           <Button>Delete</Button>
         </span>

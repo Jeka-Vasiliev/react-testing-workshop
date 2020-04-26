@@ -12,7 +12,7 @@ export const App: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadTodos());
+    dispatch(loadTodos.request());
   }, []);
 
   return (

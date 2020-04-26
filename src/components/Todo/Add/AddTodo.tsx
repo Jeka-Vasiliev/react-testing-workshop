@@ -9,7 +9,7 @@ export const AddTodo: React.FC = () => {
 
   const keyHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      dispatch(addTodo(e.currentTarget.value));
+      dispatch(addTodo.request(e.currentTarget.value));
       e.currentTarget.value = '';
     }
   };
