@@ -26,4 +26,6 @@ export const loadTodos = createAsyncAction(
   "LOAD_TODOS_FAILURE"
 )<undefined, Todo[], Error>();
 
-export const updateFilter = createAction("UPDATE_FILTER")<string>();
+export const updateFilter = createAction("UPDATE_FILTER")<
+  "ALL" | "ACTIVE" | "COMPLITED"
+>();
