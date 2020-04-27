@@ -1,17 +1,14 @@
-import { createAppStore } from ".";
-import api from "../api";
-import { asJestMock } from "../test-utils/asJestMock";
+import {
+  createTestableStore,
+  withAddApiReturnAddedTodo,
+} from "../test-utils/testableStore";
 import { addTodo } from "./actions";
-import { create } from "../test-utils/create";
 
 jest.mock("../api");
 
 describe("addTodo", () => {
   it("should add todo", async () => {
-    const store = createAppStore();
-    asJestMock(api.add).mockImplementationOnce(async (title: string) =>
-      create.todo(title)
-    );
+    const store = createTestableStore(withAddApiReturnAddedTodo());
 
     store.dispatch(addTodo.request("foo"));
 

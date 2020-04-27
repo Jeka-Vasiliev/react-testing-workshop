@@ -58,3 +58,11 @@ export function withTodos(...todoTitles: string[]): StoreBuilderStep {
     actions.push(loadTodos.success(create.todos(...todoTitles)));
   };
 }
+
+export function withAddApiReturnAddedTodo(): StoreBuilderStep {
+  return () => {
+    asJestMock(api.add).mockImplementationOnce(async (title: string) =>
+      create.todo(title)
+    );
+  };
+}
