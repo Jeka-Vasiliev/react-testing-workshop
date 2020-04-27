@@ -1,4 +1,3 @@
-import { waitFor } from "@testing-library/react";
 import React from "react";
 
 import { App } from "./App";
@@ -8,17 +7,13 @@ jest.mock("./api");
 
 describe("<App />", () => {
   it("should render loaded todos", async () => {
-    const { getByText } = renderConnected(
+    const renderResult = renderConnected(
       <App />,
       withTodosAtApi("one", "two", "three")
     );
 
-    const oneEl = await waitFor(() => getByText(/one/));
-    const twoEl = await waitFor(() => getByText(/two/));
-    const threeEl = await waitFor(() => getByText(/three/));
-
-    expect(oneEl).toBeInTheDocument();
-    expect(twoEl).toBeInTheDocument();
-    expect(threeEl).toBeInTheDocument();
+    await expect(renderResult).toContainElementWithText(/one/);
+    await expect(renderResult).toContainElementWithText(/two/);
+    await expect(renderResult).toContainElementWithText(/three/);
   });
 });
