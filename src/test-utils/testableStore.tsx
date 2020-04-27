@@ -9,7 +9,7 @@ import { AllActions, loadTodos } from "../store/actions";
 import { rootReducer } from "../store/reducers";
 import sagas from "../store/sagas";
 import { asJestMock } from "./asJestMock";
-import { create, TodoTuble } from "./create";
+import { create, TodosTuple } from "./create";
 
 export function createTestableStore(...builderSteps: StoreBuilderStep[]) {
   const actions: AllActions[] = [];
@@ -59,9 +59,9 @@ export function withTodos(...todoTitles: string[]): StoreBuilderStep {
   };
 }
 
-export function withEnabledTodos(...todos: TodoTuble[]): StoreBuilderStep {
+export function withEnabledTodos(todos: TodosTuple): StoreBuilderStep {
   return (actions) => {
-    actions.push(loadTodos.success(create.todoWithEnabled(...todos)));
+    actions.push(loadTodos.success(create.todoWithEnabled(todos)));
   };
 }
 

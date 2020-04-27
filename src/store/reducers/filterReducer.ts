@@ -3,7 +3,7 @@ import { Reducer } from "redux";
 import { AllActions } from "../actions";
 
 export const filterReducer: Reducer<
-  "ALL" | "ACTIVE" | "COMPLITED",
+  "ALL" | "ACTIVE" | "COMPLETED",
   AllActions
 > = (state = "ACTIVE", action) => {
   switch (action.type) {
